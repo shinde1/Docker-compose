@@ -1,0 +1,63 @@
+1.Create a docker compose file for linking mysql container with wordpress container.
+vi docker-compose1.yml
+---
+version: '3'
+services:
+ mydb:
+    image: mysql:5
+    environment:
+       MYSQL_ROOT_PASSWORD: smita
+ mywordpress:
+    image: wordpress
+    ports:
+     - 8888:80
+    links:
+     - mydb: mysql
+...
+docker-compose up -d
+docker-compose stop
+docker-compose down
+
+2.Create a docker compose file for linking a jenkins container with 2 tomcat containers.
+vi docker-compose.yml
+---
+version: '3'
+services:
+  devserver:
+    image: jenkins
+    ports:
+     - 5050: 8080
+  qaserver:
+    image: tomcat
+    ports:
+     - 6060: 8080
+    links:
+     - devserver: myjenkins
+...
+docker-compose up -d
+docker-compose stop
+docker-compose down
+
+
+3.Create a docker compose file to link mysql container with a ghost container.
+vi docker-compose
+---
+version: '3'
+services:
+  mydb:
+   image: mysql:5
+   environment:
+    MYSQL_ROOT_PASSWORD: smita
+
+  ghostcont:
+    image: ghost
+    ports:
+     - 8888: 2368
+    links:
+     - mydb: mysql
+...
+docker-compose up -d
+docker-compose stop
+docker-compose down
+
+
